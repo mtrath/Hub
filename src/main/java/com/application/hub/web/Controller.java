@@ -1,9 +1,7 @@
 package com.application.hub.web;
 
-import com.application.hub.domain.LanguageModel;
-import com.application.hub.domain.MemberModel;
-import com.application.hub.domain.RepositoryModel;
-import com.application.hub.domain.Service;
+import com.application.hub.domain.*;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +43,22 @@ public class Controller {
         final List<LanguageModel> languageModels = service.getLanguagesByRepository(username, reponame);
 
         return mapToJson(languageModels);
+    }
+
+    @GetMapping(value = Urls.ORG_URL_TEMPLATE + "/language-report", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getLanguagesReport(@PathVariable final String organization) {
+        final LanguageReport languagesReport = service.getLanguagesReport(organization);
+
+        final StringBuilder builder = new StringBuilder();
+        for (LanguageReport.UserReport userReport : languagesReport.getUserReports()) {
+            builder.append("- ").append(userReport.username()).append('\n');
+
+            for (LanguageReport.CountedRepositories countedRepositories : userReport.repositoriesPerLanguage()) {
+                builder.append("    ").append(countedRepositories.language()).append(' ').append(countedRepositories.repositoriesCount()).append('\n');
+            }
+        }
+
+        return builder.toString();
     }
 
     private static MemberJson mapToJson(UriComponentsBuilder uriBuilder, MemberModel member) {

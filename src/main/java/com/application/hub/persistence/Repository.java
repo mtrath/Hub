@@ -13,19 +13,22 @@ import java.util.Optional;
 @Component
 public class Repository {
     private static final Map<String, List<MemberModel>> MEMBERS = Map.of(
-            "codecentric", List.of(new MemberModel(1, "myuser"))
+            "codecentric", List.of(new MemberModel(1, "myuser"), new MemberModel(2, "anotheruser"))
     );
 
     private static final Map<String, List<RepositoryModel>> REPOSITORIES = Map.of(
             "myuser", List.of(new RepositoryModel(1, "Hello&World")),
-            "anotheruser", List.of(new RepositoryModel(1, "Fancy Tool"))
+            "anotheruser", List.of(new RepositoryModel(1, "Fancy Tool"), new RepositoryModel(2, "Another Tool"))
     );
 
     private static final Map<String, Map<String, List<LanguageModel>>> LANGUAGES = Map.of(
-            "myuser", Map.of("Hello&World",
-                    List.of(new LanguageModel("C", 100L), new LanguageModel("Python", 500L))),
-            "anotheruser", Map.of("Fancy Tool",
-                    List.of(new LanguageModel("Python", 100L)))
+            "myuser", Map.of(
+                    "Hello&World", List.of(new LanguageModel("C", 100L), new LanguageModel("Python", 500L))
+            ),
+            "anotheruser", Map.of(
+                    "Fancy Tool", List.of(new LanguageModel("Python", 100L)),
+                    "Another Tool", List.of(new LanguageModel("Python", 100L))
+            )
     );
 
     public List<MemberModel> findMembersByOrganization(final String organization) {

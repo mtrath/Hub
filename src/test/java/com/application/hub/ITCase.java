@@ -29,7 +29,10 @@ public class ITCase {
     @Test
     void testGetMembers() throws JsonProcessingException {
         // given
-        final JsonNode expected = objectMapper.readTree("[{\"id\":1,\"reposUrl\":\"http://localhost:%s/users/myuser/repos\"}]".formatted(localServerPort));
+        final JsonNode expected = objectMapper.readTree(("[" +
+                "{\"id\":1,\"reposUrl\":\"http://localhost:%1$s/users/myuser/repos\"}," +
+                "{\"id\":2,\"reposUrl\":\"http://localhost:%1$s/users/anotheruser/repos/users/anotheruser/repos\"}" +
+                "]").formatted(localServerPort));
 
         // when
         final String members = hubClient.getMembers("codecentric");
