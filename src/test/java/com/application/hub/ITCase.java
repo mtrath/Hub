@@ -55,7 +55,7 @@ public class ITCase {
     @Test
     void testGetLanguages() throws JsonProcessingException {
         // given
-        final JsonNode expected = objectMapper.readTree("{\"Python\":56789,\"C\":1234}");
+        final JsonNode expected = objectMapper.readTree("{\"Python\":500,\"C\":100}");
 
         // when
         final String members = hubClient.getLanguages("myuser", "Hello&World");
